@@ -48,6 +48,20 @@ class SleepTrackerViewModel(
     val navigateToSleepQuality : LiveData<SleepNight>
         get() = _navigateToSleepQuality
 
+    // This disable the buttons
+    // var btn = anonymous function
+    val startButtonVisible = Transformations.map(tonight) {
+        null == it
+    }
+
+    val stopButtonVisible = Transformations.map(tonight) {
+        null == it
+    }
+
+    val clearButtonVisible = Transformations.map(tonight) {
+        null == it
+    }
+
     fun doneNavigating() {
         _navigateToSleepQuality.value = null
     }
