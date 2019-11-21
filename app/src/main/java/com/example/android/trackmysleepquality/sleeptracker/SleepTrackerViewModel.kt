@@ -21,6 +21,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import com.example.android.trackmysleepquality.database.SleepDatabase
 import com.example.android.trackmysleepquality.database.SleepDatabaseDao
 import com.example.android.trackmysleepquality.database.SleepNight
 import com.example.android.trackmysleepquality.formatNights
@@ -48,6 +49,11 @@ class SleepTrackerViewModel(
     val navigateToSleepQuality : LiveData<SleepNight>
         get() = _navigateToSleepQuality
 
+    private var _showSnackbarEvent = MutableLiveData<Boolean>()
+
+    val showSnackbar : LiveData<Boolean>
+        get() = _showSnackbarEvent
+
     // This disable the buttons
     // var btn = anonymous function
     val startButtonVisible = Transformations.map(tonight) {
@@ -62,12 +68,17 @@ class SleepTrackerViewModel(
         it?.isNotEmpty()
     }
 
+    //----------------------
+    init {
+        initializeTonight()
+    }
+
     fun doneNavigating() {
         _navigateToSleepQuality.value = null
     }
 
-    init {
-        initializeTonight()
+    fun doneShowingSnackBar() {
+        _showSnackbarEvent.value = false
     }
 
     // Cancel all routines
@@ -133,6 +144,8 @@ class SleepTrackerViewModel(
         uiScope.launch {
             clear()
             tonight.value = null
+
+            _showSnackbarEvent.value = true
         }
     }
 
