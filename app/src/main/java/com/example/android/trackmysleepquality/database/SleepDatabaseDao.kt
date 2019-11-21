@@ -23,15 +23,15 @@ import androidx.room.*
 interface SleepDatabaseDao {
 
     @Insert
-    fun insert(night :  SleepNigth)
+    fun insert(night :  SleepNight)
 
     @Update
-    fun update(night :  SleepNigth)
+    fun update(night :  SleepNight)
 
     // SQL lite quere select all columns from table where nightId == key
     // If found returns a sleep night object or NULL (?)
     @Query("SELECT * FROM daily_sleep_quality_table WHERE nightId = :key")
-    fun get(key : Long) : SleepNigth?
+    fun get(key : Long) : SleepNight?
 
     // Delete all Sleep Night entities (rows)
     @Query("DELETE FROM daily_sleep_quality_table")
@@ -40,10 +40,10 @@ interface SleepDatabaseDao {
     // Returns a query with all Sleep Night entities (rows) order by Descending order by nightID
     @Query( "Select * FROM daily_sleep_quality_table ORDER BY nightId DESC")
     // Returns a list a SleepNight as Live Data
-    fun getAllNight() : LiveData<List<SleepNigth>>
+    fun getAllNight() : LiveData<List<SleepNight>>
 
     @Query("SELECT * FROM daily_sleep_quality_table ORDER BY nightId DESC LIMIT 1")
     // Return a Sleep Night object for tonight. The object may be nullable if the table was not created
     // or if the table was cleared.
-    fun getToNight() : SleepNigth?
+    fun getToNight() : SleepNight?
 }
