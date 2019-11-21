@@ -55,11 +55,11 @@ class SleepTrackerViewModel(
     }
 
     val stopButtonVisible = Transformations.map(tonight) {
-        null == it
+        null != it
     }
 
-    val clearButtonVisible = Transformations.map(tonight) {
-        null == it
+    val clearButtonVisible = Transformations.map(nights) {
+        it?.isNotEmpty()
     }
 
     fun doneNavigating() {
